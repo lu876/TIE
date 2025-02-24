@@ -1,4 +1,4 @@
-# Mitigating-Spurious-Correlations-in-Zero-Shot-Multimodal-Models
+# Mitigating Spurious Correlations in Zero-Shot Multimodal Models
 
 ## Installation
 
