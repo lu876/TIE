@@ -1,9 +1,12 @@
 # Mitigating Spurious Correlations in Zero-Shot Multimodal Models
+Welcome! This is the official implementation of our [paper](https://openreview.net/pdf?id=UsRKFYR4lM) , which has been accepted by **ICLR 2025**. 
 
+In this work, we propose a solution that tackles spurious correlations in VLMs within the zero-shot setting. Our approach utilizes a translation operation that preserves the latent space distribution to address issues of spurious correlations. Our method is inspired by a theoretical analysis, which identifies that the optimal translation directions are along the spurious vector. As VLMs unify two modalities, we compute spurious vectors from the text prompts and guide the translation for image embeddings, aligning the requirements for the fusion of different modalities in VLMs.
+![Our proposed learning framework](Figure/framework.png)
 ## Installation
 
 ### Requirements
-- open_clip_torch
+- [open_clip](https://github.com/mlfoundations/open_clip)
 - requirements (in requirements.txt)
 
 ### Installing
@@ -40,12 +43,81 @@ if not os.path.exists(os.path.join(data_root, 'isic')):
 
 4. **COVID-19 Dataset**
     - Download from: https://github.com/ieee8023/covid-chestxray-dataset
-    - Place in the directory above the repository root
+
+  
+5. **FMOW Dataset**
+   - FMOW can be downloaded by [Wilds](https://github.com/p-lambda/wilds/) 
 
 ## Reproducing Experiments
+### Getting Started
 
-1. Activate your conda environment
-2. Run `Table1-WB.ipynb` to reproduce TIE for Waterbirds
-3. Run `Table2-CelebA` to reproduce TIE for CelebA  
-4. Run `Table3-ISIC.ipynb` to reproduce TIE for ISIC
-5. Run `Table3-Covid.ipynb` to reproduce TIE for COVID-19
+To run **TIE**, we provide a Jupyter Notebook (`.ipynb`) file that contains all historical data for reference. Follow these steps:
+
+### Running **TIE**
+Ensure you have an active Conda environment before proceeding.
+To reproduce **TIE** results for different datasets, execute the corresponding Jupyter Notebook:
+
+1. **Waterbirds**: Run `Table1-WB.ipynb`
+2. **CelebA**: Run `Table2-CelebA.ipynb`
+3. **ISIC**: Run `Table3-ISIC.ipynb`
+4. **COVID-19**: Run `Table3-Covid.ipynb`
+
+### Running **TIE***  
+To enable **TIE***, modify the following line in the code:
+
+```
+a = True
+```
+Change it to
+```
+a = False
+ ```
+This will automatically prevent the use of the spurious label, leverage zero-shot capability to infer the spurious label, and change the model to **TIE***.
+
+### Changing the CLIP Model
+If you want to use a different CLIP model, update the following lines in the code: 
+
+Current (Default) CLIP Model – ViT-L/14
+
+``` 
+model,_, preprocess =  open_clip.create_model_and_transforms("ViT-L-14", pretrained='laion2b_s32b_b82k') #ViTL/14
+model = model.to(device)
+tokenizer = open_clip.get_tokenizer('ViT-L-14')
+```
+    
+**Switching to CLIP ViT-B/32**
+
+To use the ViT-B/32 model instead, comment out the above lines and uncomment the following:
+
+```
+model,_, preprocess =  open_clip.create_model_and_transforms("ViT-B/32", pretrained='openai') #ViTB/32
+model = model.to(device)
+tokenizer = open_clip.get_tokenizer('ViT-B-32')
+```
+    
+Both **TIE** and **TIE*** support this modification.
+
+
+
+## Acknowledgment
+We sincerely thank the contributors of open-source repositories that have supported this project, especially:
+[DISC](https://github.com/Wuyxin/DISC) 
+[OpenCLIP](https://github.com/mlfoundations/open_clip) 
+[Wilds](https://github.com/p-lambda/wilds/)
+[CLIP](https://github.com/openai/CLIP)
+
+## Citiation
+If you found this work interesting or useful, would you please consider citing our work:
+```
+@inproceedings{
+lu2025mitigating,
+title={Mitigating Spurious Correlations in Zero-Shot Multimodal Models},
+author={Shenyu Lu and Junyi Chai and Xiaoqian Wang},
+booktitle={The Thirteenth International Conference on Learning Representations},
+year={2025},
+url={https://openreview.net/forum?id=UsRKFYR4lM}
+}
+```
+
+
+
