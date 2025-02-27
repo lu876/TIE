@@ -101,10 +101,15 @@ Both **TIE** and **TIE*** support this modification.
 
 ## Acknowledgment
 We sincerely thank the contributors of open-source repositories that have supported this project, especially:
+
 [DISC](https://github.com/Wuyxin/DISC) 
+
 [OpenCLIP](https://github.com/mlfoundations/open_clip) 
+
 [Wilds](https://github.com/p-lambda/wilds/)
+
 [CLIP](https://github.com/openai/CLIP)
+
 
 ## Citiation
 If you found this work interesting or useful, would you please consider citing our work:
